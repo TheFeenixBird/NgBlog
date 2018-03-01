@@ -1,0 +1,9 @@
+@import url('starter-template.css');
+
+.listArticle{
+    padding-bottom: 2rem;
+}
+
+h1{
+    padding: 1rem;
+}
