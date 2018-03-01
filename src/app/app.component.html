@@ -8,12 +8,12 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link" href="#">Liste des articles
+        <a class="nav-link" href="#" (click)="backToList()">Liste des articles
           <span class="sr-only">(current)</span>
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Créer un article</a>
+        <a class="nav-link" href="#" (click)="addArticle()">Créer un article</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="#">Contact</a>
@@ -24,13 +24,17 @@
 <div class="starter-template">
   <div class="container">
     <h1>{{ title }}</h1>
-    <button class="btn btn-success" (click)="addArticle()">Ajouter un article</button>
+    <button class="btn btn-dark" (click)="addArticle()">Ajouter un article</button>
     <button class="btn btn-danger" (click)="backToList()">Ferme</button>
+    
     <hr />
 
     <div class="listArticle" *ngIf="!editing">
-      <div class="article" *ngFor="let article of articles">
-        <h2>{{ article?.title }}</h2>
+      <div class="article" *ngFor="let article of articles;index as i;">
+        <h2>{{ article?.title }}
+            <img src="/assets/edit.png" (click)="modifyArticle(article.id, i)">
+            <img src="/assets/trash.png" (click)="deleteArticle(article.id, i)">
+        </h2>
         <p>{{ article?.description }}</p>
         <p><i>Publié par {{ article?.author }}</i></p>
       </div>
@@ -67,7 +71,8 @@
             </div>
           </div>
           <div class="col-md-12">
-            <input type="submit" class="btn btn-secondary btn-send" value="Publish">
+            <input type="submit" class="btn btn-secondary btn-send" (click)='backToList()' value="Publish">
+            <input class='btn btn-success' type="submit" >
           </div>
         </div>
 

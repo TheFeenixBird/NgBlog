@@ -50,15 +50,41 @@ export class AppComponent {
   }
 
   backToList() {
-    this.editing = false;
-    setTimeout
+    setTimeout(() => this.editing = false);
   }
 
   saveArticle(myForm: NgForm) {
-    // Utilisation de JSON pour sérialiser puis déserialiser l'article afin de'obtenir une nouvelle instance d'objet utilisant une autre adresse mémoire
+
     //this.articles.push(this.editArticle);
-    this.articles.push(JSON.parse(JSON.stringify(this.editArticle)));
+    //this.articles.push(JSON.parse(JSON.stringify(this.editArticle)));
+    if (this.editArticle.id >= 0) {
+      this.articleService.update(this.editArticle)
+      .subscribe((article) => {
+        // Remplacer l'article a jour dans la liste
+        let index = this.articles.findIndex(
+          (value: Article) => value.id === article.id);
+        this.articles.splice(index, 1, article);
+      });
+    } else {
+      this.articleService.create(this.editArticle)
+        .subscribe((article) => this.articles.push(article));
+    }
+    this.editArticle.id = undefined;
     myForm.resetForm();
-    this.editing = false;
+
   }
+
+  modifyArticle(id: number, index: number) {
+
+    this.editArticle = this.articles[index];
+    //Bascule vers l'affichage du formulaire
+    this.addArticle();
+  }
+
+  deleteArticle(id: number, index: number) {
+    // splice permet de supprimer une donnée d'un tableau
+    this.articles.splice(index, 1);
+
+  }
+
 }

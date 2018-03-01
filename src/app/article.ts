@@ -6,6 +6,7 @@ export class Article {
     description: string;
     author: string;
     date: moment.Moment;
+    
 
     constructor(id: number, title: string, description?: string, author: string = 'Shanna') {
         
